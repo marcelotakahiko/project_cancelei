@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Cadastro de Pagamento</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+
+<div class="logo-container">
+  <img th:src="@{/images/logocancelei.png}" alt="Logo Cancelei">
+</div>
+
+<div class="navbar">
+  <a href="/home">Home</a>
+  <a href="/assinaturas">Assinaturas</a>
+  <a href="/pagamentos">Pagamentos</a>
+</div>
+
+<h2 th:text="${pagamento.id != null} ? 'Editar Pagamento' : 'Novo Pagamento'"></h2>
+
+<form th:action="@{/pagamentos}" th:object="${pagamento}" method="post">
+  <input type="hidden" th:field="*{id}" />
+
+  <label>Data de Pagamento:</label>
+  <input type="date" th:field="*{dataPagamento}" required /><br>
+
+  <label>Valor:</label>
+  <input type="number" th:field="*{valor}" step="0.01" required /><br>
+
+  <label>Forma de Pagamento:</label>
+  <input type="text" th:field="*{metodo}" required /><br>
+
+  <label>Assinatura:</label>
+  <select th:field="*{assinaturaId}">
+    <option th:each="assinatura : ${assinaturas}"
+            th:value="${assinatura.id}"
+            th:text="${assinatura.nomeServico}">
+    </option>
+  </select><br>
+
+  <button type="submit" class="btn">Salvar</button>
+</form>
+
+<a href="/pagamentos" class="btn">Voltar</a>
+
+</body>
+</html>

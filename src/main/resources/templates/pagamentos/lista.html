@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Pagamentos</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+
+<div class="logo-container">
+    <img th:src="@{/images/logocancelei.png}" alt="Logo Cancelei">
+</div>
+
+<div class="navbar">
+    <a href="/home">Home</a>
+    <a href="/assinaturas">Assinaturas</a>
+    <a href="/pagamentos">Pagamentos</a>
+</div>
+
+<h1>Lista de Pagamentos</h1>
+
+<a th:href="@{/pagamentos/novo}" class="btn">Novo Pagamento</a>
+
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Data</th>
+        <th>Método</th>
+        <th>Status</th>
+        <th>Valor</th>
+        <th>Ações</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p : ${pagamentos}">
+        <td th:text="${p.id}"></td>
+        <td th:text="${p.dataPagamento}"></td>
+        <td th:text="${p.metodo}"></td>
+        <td th:text="${p.status}"></td>
+        <td th:text="${p.valor}"></td>
+        <td>
+            <a th:href="@{'/pagamentos/editar/' + ${p.id}}" class="btn">Editar</a>
+            <a th:href="@{'/pagamentos/excluir/' + ${p.id}}"
+               onclick="return confirm('Tem certeza que deseja excluir?');" class="btn-delete">Excluir</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

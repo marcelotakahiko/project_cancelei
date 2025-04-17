@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Assinatura</title>
+    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <script th:src="@{/js/script.js}"></script>
+</head>
+<body>
+
+<div class="logo-container">
+    <img th:src="@{/images/logocancelei.png}" alt="Logo Cancelei">
+</div>
+
+<div class="navbar">
+    <a href="/home">Home</a>
+    <a href="/assinaturas">Assinaturas</a>
+    <a href="/pagamentos">Pagamentos</a>
+</div>
+
+<h2 th:text="${assinatura.id != null} ? 'Editar Assinatura' : 'Nova Assinatura'"></h2>
+
+<form th:action="@{/assinaturas}" th:object="${assinatura}" method="post">
+    <input type="hidden" th:field="*{id}" />
+
+    <label>Nome do Serviço:</label>
+    <input type="text" th:field="*{nomeServico}" required/><br>
+
+    <label>Valor:</label>
+    <input type="number" th:field="*{valor}" step="0.01" required/><br>
+
+    <label>Data de Vencimento:</label>
+    <input type="date" th:field="*{dataVencimento}" required/><br>
+
+    <label>Forma de Pagamento:</label>
+    <input type="text" th:field="*{formaPagamento}" required/><br>
+
+    <label>Status:</label>
+    <select th:field="*{status}">
+        <option value="Ativa">Ativa</option>
+        <option value="Inativa">Inativa</option>
+    </select><br>
+
+    <button type="submit" class="btn">Salvar</button>
+</form>
+
+<a href="/assinaturas" class="btn">Voltar</a>
+
+</body>
+</html>

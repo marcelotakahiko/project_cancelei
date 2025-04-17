@@ -26,4 +26,3 @@ public class Usuario {
     private Boolean aceitouTermos;
 }
 
-//CREATE EXTENSION IF NOT EXISTS "pgcrypto"
