@@ -1,6 +1,8 @@
 package com.example.crud.domain.assinatura;
 
+import com.example.crud.domain.usuario.Usuario;
 import jakarta.persistence.*;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -21,6 +23,10 @@ public class Assinatura {
     private String formaPagamento;
 
     private String status;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     public Long getId() {
         return id;
@@ -68,5 +74,13 @@ public class Assinatura {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public Usuario getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuario usuario) {
+        this.usuario = usuario;
     }
 }
