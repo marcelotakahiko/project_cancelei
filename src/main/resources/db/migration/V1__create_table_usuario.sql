@@ -6,5 +6,6 @@ CREATE TABLE usuario (
     email TEXT NOT NULL,
     senha TEXT NOT NULL,
     active BOOLEAN DEFAULT TRUE,
-    aceitou_termos BOOLEAN NOT NULL
+    aceitou_termos BOOLEAN NOT NULL,
+    role TEXT DEFAULT 'USER'
 );

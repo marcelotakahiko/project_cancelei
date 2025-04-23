@@ -1,5 +1,6 @@
-package com.example.crud.domain.pagamento;
+package com.example.crud.domain.pagamentos;
 
+import com.example.crud.domain.assinatura.Assinatura;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -16,7 +17,10 @@ public class Pagamento {
     private String metodo;
     private LocalDate dataPagamento;
     private String status;
-    private Long assinaturaId;
+
+    @ManyToOne
+    @JoinColumn(name = "assinatura_id")
+    private Assinatura assinatura;
 
     public Long getId() {
         return id;
@@ -58,11 +62,11 @@ public class Pagamento {
         this.status = status;
     }
 
-    public Long getAssinaturaId() {
-        return assinaturaId;
+    public Assinatura getAssinatura() {
+        return assinatura;
     }
 
-    public void setAssinaturaId(Long assinaturaId) {
-        this.assinaturaId = assinaturaId;
+    public void setAssinatura(Assinatura assinatura) {
+        this.assinatura = assinatura;
     }
 }

@@ -16,11 +16,15 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
-
     private String nome;
     private String email;
     private String senha;
     private Boolean active = true;
+
+
+
+    @Enumerated(EnumType.STRING)
+    private Role role = Role.USER;    //usuário padrão
 
     @Column(name = "aceitou_termos")
     private Boolean aceitouTermos;

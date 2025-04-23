@@ -3,6 +3,7 @@ package com.example.crud.service;
 import com.example.crud.domain.usuario.Usuario;
 import com.example.crud.domain.usuario.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,7 +16,11 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public Usuario criarUsuario(Usuario usuario) {
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
         return usuarioRepository.save(usuario);
     }
 
@@ -33,7 +38,10 @@ public class UsuarioService {
         if (usuario != null) {
             usuario.setNome(usuarioAtualizado.getNome());
             usuario.setEmail(usuarioAtualizado.getEmail());
-            usuario.setSenha(usuarioAtualizado.getSenha());
+
+            // Criptografa a nova senha antes de atualizar
+            usuario.setSenha(passwordEncoder.encode(usuarioAtualizado.getSenha()));
+
             return usuarioRepository.save(usuario);
         }
         return null;

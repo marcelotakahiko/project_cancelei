@@ -1,6 +1,6 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.pagamento.Pagamento;
+import com.example.crud.domain.pagamentos.Pagamento;
 import com.example.crud.service.PagamentoService;
 import com.example.crud.service.AssinaturaService;
 import org.springframework.stereotype.Controller;
@@ -19,7 +19,6 @@ public class PagamentoController {
         this.assinaturaService = assinaturaService;
     }
 
-    // Exibe a lista de pagamentos
     @GetMapping
     public String listar(Model model) {
         model.addAttribute("pagamentos", pagamentoService.listar());
@@ -33,14 +32,19 @@ public class PagamentoController {
         return "pagamentos/form";
     }
 
-    // Salva um novo pagamento
+    @GetMapping("/form")
+    public String form(Model model) {
+        model.addAttribute("pagamento", new Pagamento());
+        model.addAttribute("assinaturas", assinaturaService.listar());
+        return "pagamentos/form";
+    }
+
     @PostMapping
     public String salvar(@ModelAttribute Pagamento pagamento) {
         pagamentoService.salvar(pagamento);
         return "redirect:/pagamentos";
     }
 
-    // Carrega os dados de um pagamento para edição
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
         model.addAttribute("pagamento", pagamentoService.buscarPorId(id));
@@ -48,7 +52,6 @@ public class PagamentoController {
         return "pagamentos/form";
     }
 
-    // Exclui um pagamento
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable Long id) {
         pagamentoService.excluir(id);

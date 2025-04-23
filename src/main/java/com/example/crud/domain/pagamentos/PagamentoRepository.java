@@ -1,4 +1,4 @@
-package com.example.crud.domain.pagamento;
+package com.example.crud.domain.pagamentos;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
