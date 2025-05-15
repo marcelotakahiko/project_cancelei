@@ -8,4 +8,6 @@ import java.util.List;
 public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {
 
     List<Assinatura> findTop2ByUsuarioOrderByDataVencimentoAsc(Usuario usuario);
+
+    List<Assinatura> findByUsuario(Usuario usuario);
 }

@@ -2,6 +2,7 @@ package com.example.crud.service;
 
 import com.example.crud.domain.assinatura.Assinatura;
 import com.example.crud.domain.assinatura.AssinaturaRepository;
+import com.example.crud.domain.usuario.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -18,6 +19,10 @@ public class AssinaturaService {
 
     public List<Assinatura> listar() {
         return repository.findAll();
+    }
+
+    public List<Assinatura> listarPorUsuario(Usuario usuario) {
+        return repository.findByUsuario(usuario);
     }
 
     public Assinatura salvar(Assinatura assinatura) {

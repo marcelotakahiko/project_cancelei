@@ -1,8 +1,11 @@
 package com.example.crud.controllers;
 
 import com.example.crud.domain.pagamentos.Pagamento;
-import com.example.crud.service.PagamentoService;
+import com.example.crud.domain.usuario.Usuario;
+import com.example.crud.domain.usuario.UsuarioRepository;
 import com.example.crud.service.AssinaturaService;
+import com.example.crud.service.PagamentoService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,29 +16,42 @@ public class PagamentoController {
 
     private final PagamentoService pagamentoService;
     private final AssinaturaService assinaturaService;
+    private final UsuarioRepository usuarioRepository;
 
-    public PagamentoController(PagamentoService pagamentoService, AssinaturaService assinaturaService) {
+    public PagamentoController(PagamentoService pagamentoService, AssinaturaService assinaturaService, UsuarioRepository usuarioRepository) {
         this.pagamentoService = pagamentoService;
         this.assinaturaService = assinaturaService;
+        this.usuarioRepository = usuarioRepository;
     }
 
     @GetMapping
     public String listar(Model model) {
-        model.addAttribute("pagamentos", pagamentoService.listar());
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
+
+        model.addAttribute("pagamentos", pagamentoService.listarPorUsuario(usuario));
         return "pagamentos/lista";
     }
 
     @GetMapping("/novo")
     public String novo(Model model) {
         model.addAttribute("pagamento", new Pagamento());
-        model.addAttribute("assinaturas", assinaturaService.listar());
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
+
+        model.addAttribute("assinaturas", assinaturaService.listarPorUsuario(usuario));
         return "pagamentos/form";
     }
 
     @GetMapping("/form")
     public String form(Model model) {
         model.addAttribute("pagamento", new Pagamento());
-        model.addAttribute("assinaturas", assinaturaService.listar());
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
+
+        model.addAttribute("assinaturas", assinaturaService.listarPorUsuario(usuario));
         return "pagamentos/form";
     }
 
@@ -47,14 +63,31 @@ public class PagamentoController {
 
     @GetMapping("/editar/{id}")
     public String editar(@PathVariable Long id, Model model) {
-        model.addAttribute("pagamento", pagamentoService.buscarPorId(id));
-        model.addAttribute("assinaturas", assinaturaService.listar());
+        Pagamento pagamento = pagamentoService.buscarPorId(id);
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
+
+        if (!pagamento.getAssinatura().getUsuario().getId().equals(usuario.getId())) {
+            return "redirect:/pagamentos"; // Proteção
+        }
+
+        model.addAttribute("pagamento", pagamento);
+        model.addAttribute("assinaturas", assinaturaService.listarPorUsuario(usuario));
         return "pagamentos/form";
     }
 
     @GetMapping("/excluir/{id}")
     public String excluir(@PathVariable Long id) {
-        pagamentoService.excluir(id);
+        Pagamento pagamento = pagamentoService.buscarPorId(id);
+
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
+        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
+
+        if (pagamento.getAssinatura().getUsuario().getId().equals(usuario.getId())) {
+            pagamentoService.excluir(id);
+        }
+
         return "redirect:/pagamentos";
     }
 }

@@ -9,19 +9,10 @@
 </head>
 <body class="bg-light">
 
+<!--navbar -->
+<div th:replace="fragments/navbar :: navbar"></div>
+
 <div class="container mt-4">
-  <div class="text-center mb-4">
-    <img th:src="@{/images/logocancelei.png}" alt="Logo Cancelei" class="img-fluid" style="max-height: 80px;">
-  </div>
-
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4 rounded">
-    <div class="container-fluid justify-content-center">
-      <a class="nav-link text-white mx-3" href="/home">Home</a>
-      <a class="nav-link text-white mx-3" href="/assinaturas">Assinaturas</a>
-      <a class="nav-link text-white mx-3" href="/pagamentos">Pagamentos</a>
-    </div>
-  </nav>
-
   <div class="card shadow">
     <div class="card-header text-center">
       <h4 th:text="${pagamento.id != null} ? 'Editar Pagamento' : 'Novo Pagamento'"></h4>
@@ -56,7 +47,7 @@
         <div class="mb-3">
           <label class="form-label">Assinatura:</label>
           <select th:field="*{assinatura}" class="form-select">
-          <option th:each="assinatura : ${assinaturas}"
+            <option th:each="assinatura : ${assinaturas}"
                     th:value="${assinatura.id}"
                     th:text="${assinatura.nomeServico}">
             </option>

@@ -10,40 +10,22 @@
 <body>
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <div class="container-fluid">
-    <a class="navbar-brand d-flex align-items-center" th:href="@{/home}">
-      <img th:src="@{/images/logocancelei.png}" alt="Logo Cancelei" width="30" height="30" class="d-inline-block align-text-top me-2">
-      Cancelei
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/assinaturas}">Assinaturas</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" th:href="@{/pagamentos}">Pagamentos</a>
-        </li>
-      </ul>
-      <ul class="navbar-nav">
-        <li class="nav-item">
-          <form th:action="@{/logout}" method="post" style="display: inline;">
-            <button type="submit" class="btn btn-link text-danger" style="text-decoration: none; padding: 0; border: none; background: none;">Sair</button>
-          </form>
-        </li>
-      </ul>
-    </div>
-  </div>
-</nav>
+<div th:replace="fragments/navbar :: navbar"></div>
 
-<!-- Conteúdo principal -->
+<!--Conteúdo principal-->
 <div class="container mt-5">
   <h2 class="text-center mb-4">Painel Geral</h2>
   <div class="row text-center">
-    <!-- Card 1 - Assinaturas Ativas -->
+
+    <!-- Notificações pendentes -->
+    <div th:if="${notificacoes != null and !notificacoes.isEmpty()}" class="alert alert-warning shadow-sm mb-4">
+      <h5 class="mb-3">🔔 Você tem notificações pendentes:</h5>
+      <ul class="mb-0">
+        <li th:each="n : ${notificacoes}" th:text="${n.titulo} + ' - ' + ${#temporals.format(n.data, 'dd/MM/yyyy')}"></li>
+      </ul>
+    </div>
+
+    <!-- Assinaturas Ativas -->
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm">
         <div class="card-header bg-primary text-white">
@@ -61,7 +43,7 @@
       </div>
     </div>
 
-    <!-- Card 2 - Relatório de Pagamentos -->
+    <!-- Relatório de Pagamentos -->
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm">
         <div class="card-header bg-success text-white">
@@ -79,7 +61,7 @@
       </div>
     </div>
 
-    <!-- Card 3 - Próximas Cobranças -->
+    <!-- Próximas Cobranças -->
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm">
         <div class="card-header bg-warning text-dark">
@@ -98,8 +80,6 @@
     </div>
   </div>
 </div>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

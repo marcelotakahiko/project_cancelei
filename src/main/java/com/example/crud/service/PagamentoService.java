@@ -4,6 +4,7 @@ import com.example.crud.domain.pagamentos.Pagamento;
 import com.example.crud.domain.pagamentos.PagamentoRepository;
 import com.example.crud.domain.assinatura.Assinatura;
 import com.example.crud.domain.assinatura.AssinaturaRepository;
+import com.example.crud.domain.usuario.Usuario;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -26,6 +27,10 @@ public class PagamentoService {
         return repository.findAll();
     }
 
+    public List<Pagamento> listarPorUsuario(Usuario usuario) {
+        return repository.findByAssinaturaUsuario(usuario);
+    }
+
     public Pagamento salvar(Pagamento pagamento) {
         return repository.save(pagamento);
     }
@@ -38,7 +43,6 @@ public class PagamentoService {
         repository.deleteById(id);
     }
 
-    //Relatório total por assinatura
     public Map<String, BigDecimal> calcularTotalPorAssinatura() {
         List<Pagamento> pagamentos = repository.findAll();
         return pagamentos.stream()
@@ -49,7 +53,6 @@ public class PagamentoService {
                 ));
     }
 
-    //Pagamentos automáticos
     public void gerarPagamentosAutomaticos() {
         List<Assinatura> assinaturas = assinaturaRepository.findAll();
 
@@ -59,7 +62,7 @@ public class PagamentoService {
             p.setDataPagamento(LocalDate.now());
             p.setMetodo("Automático");
             p.setStatus("Pago");
-            p.setValor(assinatura.getValor()); // precisa que assinatura tenha .getValor()
+            p.setValor(assinatura.getValor());
             repository.save(p);
         }
     }
