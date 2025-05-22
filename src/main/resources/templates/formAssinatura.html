@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!-- Formulário -->
@@ -31,7 +30,8 @@
 
         <div class="mb-3">
             <label for="dataVencimento" class="form-label">Data de Vencimento:</label>
-            <input type="date" th:field="*{dataVencimento}" id="dataVencimento" class="form-control" required />
+            <input type="date" id="dataVencimento" name="dataVencimento"
+                   th:value="${assinatura.dataVencimento}" class="form-control" required />
         </div>
 
         <div class="mb-3">

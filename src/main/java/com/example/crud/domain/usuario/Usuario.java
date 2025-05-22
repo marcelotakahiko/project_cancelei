@@ -21,10 +21,8 @@ public class Usuario {
     private String senha;
     private Boolean active = true;
 
-
-
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;    //usuário padrão
+    private Role role = Role.USER;    //Role usuário
 
     @Column(name = "aceitou_termos")
     private Boolean aceitouTermos;

@@ -9,7 +9,6 @@
 </head>
 <body class="bg-light">
 
-<!-- Fragmento da navbar padronizada -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container mt-4">
@@ -18,33 +17,26 @@
     <a href="/notificacoes/nova" class="btn btn-success">Nova Notificação</a>
   </div>
 
-  <div class="card shadow">
-    <div class="card-body">
-      <table class="table table-striped table-bordered">
-        <thead class="table-dark">
-        <tr>
-          <th>Título</th>
-          <th>Data</th>
-          <th>Mensagem</th>
-          <th>Status</th>
-          <th>Assinatura</th>
-          <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="notificacao : ${notificacoes}">
-          <td th:text="${notificacao.titulo}"></td>
-          <td th:text="${notificacao.data}"></td>
-          <td th:text="${notificacao.mensagem}"></td>
-          <td th:text="${notificacao.status}"></td>
-          <td th:text="${notificacao.assinatura.nomeServico}"></td>
-          <td>
-            <a th:href="@{'/notificacoes/editar/' + ${notificacao.id}}" class="btn btn-sm btn-primary">Editar</a>
-            <a th:href="@{'/notificacoes/excluir/' + ${notificacao.id}}" class="btn btn-sm btn-danger ms-1 btn-delete">Excluir</a>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+  <div class="card-grid">
+    <div class="card" th:each="notificacao : ${notificacoes}">
+      <div>
+        <div class="card-title" th:text="${notificacao.titulo}">Título da Notificação</div>
+
+        <div th:switch="${#strings.toUpperCase(notificacao.status)}">
+          <div class="badge success" th:case="'ENVIADA'">Enviada</div>
+          <div class="badge warning" th:case="'PENDENTE'">Pendente</div>
+          <div class="badge danger" th:case="*">Desconhecido</div>
+        </div>
+
+        <div class="card-info"><strong>Data:</strong> <span th:text="${notificacao.data}">2025-05-17</span></div>
+        <div class="card-info"><strong>Mensagem:</strong> <span th:text="${notificacao.mensagem}">Texto da mensagem</span></div>
+        <div class="card-info"><strong>Assinatura:</strong> <span th:text="${notificacao.assinatura.nomeServico}">Netflix</span></div>
+      </div>
+
+      <div class="card-actions">
+        <a th:href="@{'/notificacoes/editar/' + ${notificacao.id}}" class="btn btn-sm btn-primary">Editar</a>
+        <a th:href="@{'/notificacoes/excluir/' + ${notificacao.id}}" class="btn btn-sm btn-danger btn-delete">Excluir</a>
+      </div>
     </div>
   </div>
 </div>

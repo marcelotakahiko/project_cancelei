@@ -9,7 +9,6 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <!-- Conteúdo -->
@@ -19,34 +18,26 @@
         <a class="btn btn-success" th:href="@{/assinaturas/nova}">+ Nova Assinatura</a>
     </div>
 
-    <div class="table-responsive">
-        <table class="table table-striped table-hover align-middle">
-            <thead class="table-dark">
-            <tr>
-                <th>ID</th>
-                <th>Serviço</th>
-                <th>Valor</th>
-                <th>Vencimento</th>
-                <th>Pagamento</th>
-                <th>Status</th>
-                <th>Ações</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="a : ${assinaturas}">
-                <td th:text="${a.id}"></td>
-                <td th:text="${a.nomeServico}"></td>
-                <td th:text="${a.valor}"></td>
-                <td th:text="${a.dataVencimento}"></td>
-                <td th:text="${a.formaPagamento}"></td>
-                <td th:text="${a.status}"></td>
-                <td>
-                    <a th:href="@{'/assinaturas/editar/' + ${a.id}}" class="btn btn-sm btn-primary me-2">Editar</a>
-                    <a th:href="@{'/assinaturas/excluir/' + ${a.id}}" class="btn btn-sm btn-danger btn-delete">Excluir</a>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+    <div class="card-grid">
+        <div class="card" th:each="a : ${assinaturas}">
+            <div>
+                <div class="card-title" th:text="${a.nomeServico}">Nome do Serviço</div>
+
+                <div th:switch="${a.status}">
+                    <div class="badge success" th:case="'Ativa'">Ativa</div>
+                    <div class="badge danger" th:case="'Inativa'">Inativa</div>
+                </div>
+
+                <div class="card-info"><strong>Valor:</strong> R$ <span th:text="${a.valor}">00,00</span></div>
+                <div class="card-info"><strong>Vencimento:</strong> <span th:text="${a.dataVencimento}">DD/MM/AAAA</span></div>
+                <div class="card-info"><strong>Pagamento:</strong> <span th:text="${a.formaPagamento}">Cartão</span></div>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{'/assinaturas/editar/' + ${a.id}}" class="btn btn-sm btn-primary">Editar</a>
+                <a th:href="@{'/assinaturas/excluir/' + ${a.id}}" class="btn btn-sm btn-danger btn-delete">Excluir</a>
+            </div>
+        </div>
     </div>
 </div>
 

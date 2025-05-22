@@ -9,45 +9,33 @@
 </head>
 <body class="bg-light">
 
-<!-- Importa a navbar -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
 <div class="container mt-4">
-    <div class="card shadow">
-        <div class="card-header d-flex justify-content-between align-items-center">
-            <h4 class="mb-0">Pagamentos Cadastrados</h4>
-            <a th:href="@{/pagamentos/form}" class="btn btn-primary">Novo Pagamento</a>
-        </div>
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover align-middle">
-                    <thead class="table-dark">
-                    <tr>
-                        <th>Assinatura</th>
-                        <th>Data</th>
-                        <th>Método</th>
-                        <th>Status</th>
-                        <th>Valor</th>
-                        <th>Ações</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr th:each="p : ${pagamentos}">
-                        <td th:text="${p.assinatura.nomeServico}"></td>
-                        <td th:text="${p.dataPagamento}"></td>
-                        <td th:text="${p.metodo}"></td>
-                        <td th:text="${p.status}"></td>
-                        <td th:text="${p.valor}"></td>
-                        <td>
-                            <a th:href="@{'/pagamentos/editar/' + ${p.id}}" class="btn btn-sm btn-warning">Editar</a>
-                            <a th:href="@{'/pagamentos/excluir/' + ${p.id}}"
-                               class="btn btn-sm btn-danger btn-delete">
-                                Excluir
-                            </a>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h4 class="mb-0">Pagamentos Cadastrados</h4>
+        <a th:href="@{/pagamentos/form}" class="btn btn-primary">Novo Pagamento</a>
+    </div>
+
+    <div class="card-grid">
+        <div class="card" th:each="p : ${pagamentos}">
+            <div>
+                <div class="card-title" th:text="${p.assinatura.nomeServico}">Nome da Assinatura</div>
+
+                <div th:switch="${#strings.toUpperCase(p.status)}">
+                    <div class="badge success" th:case="'PAGO'">Pago</div>
+                    <div class="badge warning" th:case="'PENDENTE'">Pendente</div>
+                    <div class="badge danger" th:case="*">Desconhecido</div>
+                </div>
+
+                <div class="card-info"><strong>Data:</strong> <span th:text="${p.dataPagamento}">2025-05-17</span></div>
+                <div class="card-info"><strong>Método:</strong> <span th:text="${p.metodo}">Cartão</span></div>
+                <div class="card-info"><strong>Valor:</strong> R$ <span th:text="${p.valor}">99,90</span></div>
+            </div>
+
+            <div class="card-actions">
+                <a th:href="@{'/pagamentos/editar/' + ${p.id}}" class="btn btn-sm btn-warning">Editar</a>
+                <a th:href="@{'/pagamentos/excluir/' + ${p.id}}" class="btn btn-sm btn-danger btn-delete">Excluir</a>
             </div>
         </div>
     </div>

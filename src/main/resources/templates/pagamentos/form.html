@@ -23,7 +23,8 @@
 
         <div class="mb-3">
           <label class="form-label">Data de Pagamento:</label>
-          <input type="date" th:field="*{dataPagamento}" class="form-control" required>
+          <input type="date" name="dataPagamento" class="form-control"
+                 th:value="${pagamento.dataPagamento}" required />
         </div>
 
         <div class="mb-3">

@@ -41,7 +41,7 @@ public class AssinaturaController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
-        assinatura.setUsuario(usuario); // Associa o usuário logado
+        assinatura.setUsuario(usuario);
         service.salvar(assinatura);
 
         return "redirect:/assinaturas";
@@ -55,7 +55,7 @@ public class AssinaturaController {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
         if (!assinatura.getUsuario().getId().equals(usuario.getId())) {
-            return "redirect:/assinaturas"; // Proteção extra
+            return "redirect:/assinaturas";
         }
 
         model.addAttribute("assinatura", assinatura);

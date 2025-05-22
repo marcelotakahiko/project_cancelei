@@ -12,43 +12,39 @@
 <!-- Navbar -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<!--Conteúdo principal-->
+<!-- Conteúdo principal -->
 <div class="container mt-5">
   <h2 class="text-center mb-4">Painel Geral</h2>
   <div class="row text-center">
 
-    <!-- Notificações pendentes -->
+    <!-- Notificações -->
     <div th:if="${notificacoes != null and !notificacoes.isEmpty()}" class="alert alert-warning shadow-sm mb-4">
-      <h5 class="mb-3">🔔 Você tem notificações pendentes:</h5>
-      <ul class="mb-0">
+      <h5 class="mb-3">Você tem notificações pendentes:</h5>
+      <ul class="list-unstyled mb-0">
         <li th:each="n : ${notificacoes}" th:text="${n.titulo} + ' - ' + ${#temporals.format(n.data, 'dd/MM/yyyy')}"></li>
       </ul>
     </div>
 
-    <!-- Assinaturas Ativas -->
+    <!-- assinaturas -->
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">
-          Assinaturas Ativas
-        </div>
+        <div class="card-header bg-primary text-white">Assinaturas Ativas</div>
         <div class="card-body">
           <div th:if="${assinaturas.isEmpty()}">
             <p>Nenhuma assinatura encontrada.</p>
           </div>
           <div th:each="a : ${assinaturas}">
-            <p th:text="${a.nomeServico} + ' - R$' + ${a.valor}"></p>
+            <p th:text="${a.nomeServico} + ' - R$' + ${a.valor} + ' vencimento: ' + ${#temporals.format(a.dataVencimento, 'dd/MM/yyyy')}"></p>
           </div>
           <a th:href="@{/assinaturas}" class="btn btn-outline-primary btn-sm">Ver mais</a>
         </div>
       </div>
     </div>
 
-    <!-- Relatório de Pagamentos -->
+    <!-- pagamentos -->
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm">
-        <div class="card-header bg-success text-white">
-          Últimos Pagamentos
-        </div>
+        <div class="card-header bg-success text-white">Últimos Pagamentos</div>
         <div class="card-body">
           <div th:if="${pagamentos.isEmpty()}">
             <p>Nenhum pagamento registrado.</p>
@@ -61,23 +57,18 @@
       </div>
     </div>
 
-    <!-- Próximas Cobranças -->
+    <!-- Total Gasto e Pendentes -->
     <div class="col-md-4 mb-4">
       <div class="card shadow-sm">
-        <div class="card-header bg-warning text-dark">
-          Próximas Cobranças
-        </div>
+        <div class="card-header bg-info text-white">Resumo Financeiro</div>
         <div class="card-body">
-          <div th:if="${assinaturas.isEmpty()}">
-            <p>Nenhuma cobrança futura registrada.</p>
-          </div>
-          <div th:each="a : ${assinaturas}">
-            <p th:text="${a.nomeServico} + ' - R$' + ${a.valor} + ' em ' + ${#temporals.format(a.dataVencimento, 'dd/MM/yyyy')}"></p>
-          </div>
-          <a th:href="@{/assinaturas}" class="btn btn-outline-warning btn-sm">Ver calendário</a>
+          <p><strong>Total Gasto:</strong> R$ <span th:text="${#numbers.formatDecimal(totalGasto, 1, 'POINT', 2, 'COMMA')}">0,00</span></p>
+          <p><strong>Total Pendente:</strong> R$ <span th:text="${#numbers.formatDecimal(totalPendente, 1, 'POINT', 2, 'COMMA')}">0,00</span></p>
+          <a th:href="@{/graficos}" class="btn btn-outline-info btn-sm mt-3">Ver completo</a>
         </div>
       </div>
     </div>
+
   </div>
 </div>
 
