@@ -14,4 +14,7 @@ public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {
     List<Assinatura> findByUsuario(Usuario usuario);
 
     Page<Assinatura> findByUsuario(Usuario usuario, Pageable pageable);
+
+    List<Assinatura> findByDataVencimento(java.time.LocalDate data);
+
 }

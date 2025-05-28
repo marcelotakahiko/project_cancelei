@@ -39,7 +39,7 @@ public class UsuarioService {
             usuario.setNome(usuarioAtualizado.getNome());
             usuario.setEmail(usuarioAtualizado.getEmail());
 
-            // Criptografa a nova senha antes de atualizar
+            // criptografa
             usuario.setSenha(passwordEncoder.encode(usuarioAtualizado.getSenha()));
 
             return usuarioRepository.save(usuario);

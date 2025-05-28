@@ -26,7 +26,6 @@ public class RedefinirSenhaController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Exibe a tela de redefinição
     @GetMapping("/redefinir-senha")
     public String form(@RequestParam String token, Model model) {
         Optional<TokenRecuperacao> tokenRec = tokenRepository.findByToken(token);
@@ -39,7 +38,6 @@ public class RedefinirSenhaController {
         return "redefinir-senha";
     }
 
-    // Processa a nova senha
     @PostMapping("/redefinir-senha")
     @Transactional
     public String salvar(@RequestParam String token,
