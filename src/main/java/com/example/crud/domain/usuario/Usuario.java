@@ -26,5 +26,11 @@ public class Usuario {
 
     @Column(name = "aceitou_termos")
     private Boolean aceitouTermos;
+
+    private String cep;
+    private String logradouro;
+    private String bairro;
+    private String cidade;
+    private String uf;
 }
 

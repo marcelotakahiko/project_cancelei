@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Controller
 public class HomeController {
@@ -40,19 +41,18 @@ public class HomeController {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
-        List<Assinatura> assinaturas = assinaturaRepository.findTop2ByUsuarioOrderByDataVencimentoAsc(usuario);
-        List<Pagamento> pagamentos = pagamentoRepository.findTop2ByUsuario(usuario);
-        List<Notificacao> notificacoes = notificacaoService.listarPorStatusEUsuario(StatusNotificacao.PENDENTE, usuario);
+        List<Assinatura> assinaturas = assinaturaRepository.findTop3ByUsuarioOrderByDataVencimentoAsc(usuario);
+        List<Pagamento> pagamentos = pagamentoRepository.findTop3ByAssinaturaUsuarioOrderByDataPagamentoDesc(usuario);
+        List<Notificacao> todasNotificacoes = notificacaoService.listarPorStatusEUsuario(StatusNotificacao.PENDENTE, usuario);
+        List<Notificacao> notificacoes = todasNotificacoes.stream().limit(5).collect(Collectors.toList());
         List<AssinaturaTotalDTO> totaisPorAssinatura = pagamentoRepository.somarValorPorAssinatura(usuario);
 
-        //total gasto
         BigDecimal totalPago = pagamentoRepository
                 .findByAssinaturaUsuario(usuario).stream()
                 .filter(p -> "Pago".equalsIgnoreCase(p.getStatus()))
                 .map(Pagamento::getValor)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
 
-        //total pendente
         BigDecimal totalPendente = pagamentoRepository
                 .findByAssinaturaUsuario(usuario).stream()
                 .filter(p -> "Pendente".equalsIgnoreCase(p.getStatus()))
@@ -62,6 +62,7 @@ public class HomeController {
         model.addAttribute("assinaturas", assinaturas);
         model.addAttribute("pagamentos", pagamentos);
         model.addAttribute("notificacoes", notificacoes);
+        model.addAttribute("temMaisNotificacoes", todasNotificacoes.size() > 5);
         model.addAttribute("totaisPorAssinatura", totaisPorAssinatura);
         model.addAttribute("totalGasto", totalPago);
         model.addAttribute("totalPendente", totalPendente);

@@ -11,34 +11,48 @@
 
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<!-- Conteúdo -->
-<div class="container mt-5">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-        <h2>Assinaturas</h2>
-        <a class="btn btn-success" th:href="@{/assinaturas/nova}">+ Nova Assinatura</a>
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Assinaturas</h2>
+        <a class="btn btn-success rounded-3 fw-semibold" th:href="@{/assinaturas/nova}">+ Nova Assinatura</a>
     </div>
 
-    <div class="card-grid">
-        <div class="card" th:each="a : ${assinaturas}">
-            <div>
-                <div class="card-title" th:text="${a.nomeServico}">Nome do Serviço</div>
+    <div class="row g-4">
+        <div class="col-md-4" th:each="a : ${page.content}">
+            <div class="card shadow-sm border-0 rounded-4 h-100">
+                <div class="card-body">
+                    <h5 class="card-title fw-semibold" th:text="${a.nomeServico}">Nome do Serviço</h5>
 
-                <div th:switch="${a.status}">
-                    <div class="badge success" th:case="'Ativa'">Ativa</div>
-                    <div class="badge danger" th:case="'Inativa'">Inativa</div>
+                    <span class="badge rounded-pill text-bg-success mb-2" th:if="${a.status == 'Ativa'}">Ativa</span>
+                    <span class="badge rounded-pill text-bg-secondary mb-2" th:if="${a.status == 'Inativa'}">Inativa</span>
+
+                    <p class="mb-1"><strong>Valor:</strong> R$ <span th:text="${a.valor}">00,00</span></p>
+                    <p class="mb-1"><strong>Vencimento:</strong> <span th:text="${#temporals.format(a.dataVencimento, 'dd/MM/yyyy')}">DD/MM/AAAA</span></p>
+                    <p class="mb-3"><strong>Pagamento:</strong> <span th:text="${a.formaPagamento}">Cartão</span></p>
+
+                    <div class="d-flex justify-content-between">
+                        <a th:href="@{'/assinaturas/editar/' + ${a.id}}" class="btn btn-outline-success btn-sm w-50 me-2">Editar</a>
+                        <a th:href="@{'/assinaturas/excluir/' + ${a.id}}" class="btn btn-danger btn-sm w-50">Excluir</a>
+                    </div>
                 </div>
-
-                <div class="card-info"><strong>Valor:</strong> R$ <span th:text="${a.valor}">00,00</span></div>
-                <div class="card-info"><strong>Vencimento:</strong> <span th:text="${a.dataVencimento}">DD/MM/AAAA</span></div>
-                <div class="card-info"><strong>Pagamento:</strong> <span th:text="${a.formaPagamento}">Cartão</span></div>
-            </div>
-
-            <div class="card-actions">
-                <a th:href="@{'/assinaturas/editar/' + ${a.id}}" class="btn btn-sm btn-primary">Editar</a>
-                <a th:href="@{'/assinaturas/excluir/' + ${a.id}}" class="btn btn-sm btn-danger btn-delete">Excluir</a>
             </div>
         </div>
     </div>
+
+    <nav th:if="${page.totalPages > 1}" aria-label="Page navigation">
+        <ul class="pagination justify-content-center mt-4">
+            <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+                <a class="page-link" th:href="@{/assinaturas(page=${page.number - 1})}">Anterior</a>
+            </li>
+            <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+                th:classappend="${i == page.number} ? 'active'">
+                <a class="page-link" th:href="@{/assinaturas(page=${i})}" th:text="${i + 1}"></a>
+            </li>
+            <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+                <a class="page-link" th:href="@{/assinaturas(page=${page.number + 1})}">Próxima</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

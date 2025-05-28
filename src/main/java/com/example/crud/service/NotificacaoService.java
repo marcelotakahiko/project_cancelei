@@ -4,6 +4,9 @@ import com.example.crud.domain.notificacao.Notificacao;
 import com.example.crud.domain.notificacao.StatusNotificacao;
 import com.example.crud.domain.usuario.Usuario;
 import com.example.crud.domain.notificacao.NotificacaoRepository;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -41,5 +44,9 @@ public class NotificacaoService {
 
     public List<Notificacao> listarPorUsuario(Usuario usuario) {
         return repository.findByAssinaturaUsuario(usuario);
+    }
+
+    public Page<Notificacao> listarPorUsuarioPaginado(Usuario usuario, Pageable pageable) {
+        return repository.findByAssinaturaUsuario(usuario, pageable);
     }
 }

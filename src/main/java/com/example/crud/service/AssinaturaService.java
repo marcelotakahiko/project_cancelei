@@ -3,6 +3,8 @@ package com.example.crud.service;
 import com.example.crud.domain.assinatura.Assinatura;
 import com.example.crud.domain.assinatura.AssinaturaRepository;
 import com.example.crud.domain.usuario.Usuario;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,6 +25,10 @@ public class AssinaturaService {
 
     public List<Assinatura> listarPorUsuario(Usuario usuario) {
         return repository.findByUsuario(usuario);
+    }
+
+    public Page<Assinatura> listarPorUsuarioPaginado(Usuario usuario, Pageable pageable) {
+        return repository.findByUsuario(usuario, pageable);
     }
 
     public Assinatura salvar(Assinatura assinatura) {

@@ -40,7 +40,6 @@ public class GraficosController {
 
         int finalAno = (ano == null) ? LocalDate.now().getYear() : ano;
 
-        //filtra os pagamentos
         List<Pagamento> filtrados = todosPagamentos.stream()
                 .filter(p -> {
                     LocalDate data = p.getDataPagamento();
@@ -48,7 +47,6 @@ public class GraficosController {
                 })
                 .collect(Collectors.toList());
 
-        //total por assinatura
         Map<String, BigDecimal> totalPorAssinatura = new LinkedHashMap<>();
         for (Pagamento p : filtrados) {
             String nome = p.getAssinatura().getNomeServico();
@@ -56,7 +54,6 @@ public class GraficosController {
                     totalPorAssinatura.getOrDefault(nome, BigDecimal.ZERO).add(p.getValor()));
         }
 
-        // total por mês
         Map<String, BigDecimal> totalPorMes = new TreeMap<>();
         for (Pagamento p : todosPagamentos) {
             if (p.getDataPagamento().getYear() == finalAno) {

@@ -7,6 +7,9 @@ import com.example.crud.domain.usuario.UsuarioRepository;
 import com.example.crud.service.AssinaturaService;
 import com.example.crud.service.NotificacaoService;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,11 +32,16 @@ public class NotificacaoController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(@RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "9") int size,
+                         Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
-        model.addAttribute("notificacoes", notificacaoService.listarPorUsuario(usuario));
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Notificacao> notificacoesPage = notificacaoService.listarPorUsuarioPaginado(usuario, pageable);
+
+        model.addAttribute("page", notificacoesPage);
         return "notificacoes/lista";
     }
 

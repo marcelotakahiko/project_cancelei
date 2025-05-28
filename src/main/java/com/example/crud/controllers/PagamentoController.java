@@ -5,6 +5,9 @@ import com.example.crud.domain.usuario.Usuario;
 import com.example.crud.domain.usuario.UsuarioRepository;
 import com.example.crud.service.AssinaturaService;
 import com.example.crud.service.PagamentoService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,11 +28,16 @@ public class PagamentoController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(@RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "9") int size,
+                         Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
-        model.addAttribute("pagamentos", pagamentoService.listarPorUsuario(usuario));
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Pagamento> pagamentosPage = pagamentoService.listarPorUsuarioPaginado(usuario, pageable);
+
+        model.addAttribute("page", pagamentosPage);
         return "pagamentos/lista";
     }
 
@@ -69,7 +77,7 @@ public class PagamentoController {
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
         if (!pagamento.getAssinatura().getUsuario().getId().equals(usuario.getId())) {
-            return "redirect:/pagamentos"; // Proteção
+            return "redirect:/pagamentos";
         }
 
         model.addAttribute("pagamento", pagamento);

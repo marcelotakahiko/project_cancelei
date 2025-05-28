@@ -9,66 +9,61 @@
 </head>
 <body>
 
-<!-- Navbar -->
 <div th:replace="fragments/navbar :: navbar"></div>
 
-<!-- Conteúdo principal -->
-<div class="container mt-5">
-  <h2 class="text-center mb-4">Painel Geral</h2>
-  <div class="row text-center">
+<div class="container py-5">
+  <h2 class="text-center fw-bold mb-4">Painel Geral</h2>
 
-    <!-- Notificações -->
-    <div th:if="${notificacoes != null and !notificacoes.isEmpty()}" class="alert alert-warning shadow-sm mb-4">
-      <h5 class="mb-3">Você tem notificações pendentes:</h5>
-      <ul class="list-unstyled mb-0">
-        <li th:each="n : ${notificacoes}" th:text="${n.titulo} + ' - ' + ${#temporals.format(n.data, 'dd/MM/yyyy')}"></li>
-      </ul>
-    </div>
+  <div th:if="${notificacoes != null and !notificacoes.isEmpty()}" class="alert alert-warning text-center fw-semibold shadow-sm mb-4">
+    <h5 class="mb-2">Você tem notificações pendentes:</h5>
+    <ul class="list-unstyled mb-2">
+      <li th:each="n, iterStat : ${notificacoes}" th:if="${iterStat.index < 5}"
+          th:text="${n.titulo} + ' - ' + ${#temporals.format(n.data, 'dd/MM/yyyy')}"></li>
+    </ul>
+    <a th:if="${temMaisNotificacoes}" th:href="@{/notificacoes}" class="btn btn-outline-warning btn-sm mt-2">Ver todas</a>
+  </div>
 
-    <!-- assinaturas -->
-    <div class="col-md-4 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-primary text-white">Assinaturas Ativas</div>
+  <div class="row g-4">
+    <div class="col-md-4">
+      <div class="card border-0 shadow rounded-4 h-100">
+        <div class="card-header bg-primary text-white fw-semibold rounded-top-4">Assinaturas Ativas</div>
         <div class="card-body">
           <div th:if="${assinaturas.isEmpty()}">
-            <p>Nenhuma assinatura encontrada.</p>
+            <p class="text-muted">Nenhuma assinatura encontrada.</p>
           </div>
-          <div th:each="a : ${assinaturas}">
+          <div th:each="a : ${assinaturas}" class="small">
             <p th:text="${a.nomeServico} + ' - R$' + ${a.valor} + ' vencimento: ' + ${#temporals.format(a.dataVencimento, 'dd/MM/yyyy')}"></p>
           </div>
-          <a th:href="@{/assinaturas}" class="btn btn-outline-primary btn-sm">Ver mais</a>
+          <a th:href="@{/assinaturas}" class="btn btn-outline-primary btn-sm w-100 mt-2">Ver mais</a>
         </div>
       </div>
     </div>
 
-    <!-- pagamentos -->
-    <div class="col-md-4 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-success text-white">Últimos Pagamentos</div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow rounded-4 h-100">
+        <div class="card-header bg-success text-white fw-semibold rounded-top-4">Últimos Pagamentos</div>
         <div class="card-body">
           <div th:if="${pagamentos.isEmpty()}">
-            <p>Nenhum pagamento registrado.</p>
+            <p class="text-muted">Nenhum pagamento registrado.</p>
           </div>
-          <div th:each="p : ${pagamentos}">
+          <div th:each="p : ${pagamentos}" class="small">
             <p th:text="${p.assinatura.nomeServico} + ' - R$' + ${p.valor} + ' em ' + ${#temporals.format(p.dataPagamento, 'dd/MM/yyyy')}"></p>
           </div>
-          <a th:href="@{/pagamentos}" class="btn btn-outline-success btn-sm">Detalhes</a>
+          <a th:href="@{/pagamentos}" class="btn btn-outline-success btn-sm w-100 mt-2">Detalhes</a>
         </div>
       </div>
     </div>
 
-    <!-- Total Gasto e Pendentes -->
-    <div class="col-md-4 mb-4">
-      <div class="card shadow-sm">
-        <div class="card-header bg-info text-white">Resumo Financeiro</div>
+    <div class="col-md-4">
+      <div class="card border-0 shadow rounded-4 h-100">
+        <div class="card-header bg-info text-white fw-semibold rounded-top-4">Resumo Financeiro</div>
         <div class="card-body">
-          <p><strong>Total Gasto:</strong> R$ <span th:text="${#numbers.formatDecimal(totalGasto, 1, 'POINT', 2, 'COMMA')}">0,00</span></p>
+          <p class="mb-1"><strong>Total Gasto:</strong> R$ <span th:text="${#numbers.formatDecimal(totalGasto, 1, 'POINT', 2, 'COMMA')}">0,00</span></p>
           <p><strong>Total Pendente:</strong> R$ <span th:text="${#numbers.formatDecimal(totalPendente, 1, 'POINT', 2, 'COMMA')}">0,00</span></p>
-          <a th:href="@{/graficos}" class="btn btn-outline-info btn-sm mt-3">Ver completo</a>
+          <a th:href="@{/graficos}" class="btn btn-outline-info btn-sm w-100 mt-3">Ver completo</a>
         </div>
       </div>
     </div>
-
   </div>
 </div>
 

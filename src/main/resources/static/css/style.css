@@ -34,33 +34,6 @@ tr:hover {
     background-color: #f9f9f9;
 }
 
-.btn, .btn-delete {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 4px;
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-    transition: background-color 0.2s;
-    margin-right: 5px;
-}
-
-.btn {
-    background-color: #4CAF50;
-}
-
-.btn:hover {
-    background-color: #45a049;
-}
-
-.btn-delete {
-    background-color: #f44336;
-}
-
-.btn-delete:hover {
-    background-color: #d32f2f;
-}
-
 a {
     text-decoration: none;
 }
@@ -91,8 +64,6 @@ a {
 .navbar a:hover {
     background-color: #575757;
 }
-
-/* === NOVO LAYOUT COM CARDS === */
 
 .card-grid {
     display: grid;
@@ -136,7 +107,6 @@ a {
     margin-top: 15px;
 }
 
-/* Badges para status */
 .badge {
     padding: 5px 10px;
     border-radius: 12px;

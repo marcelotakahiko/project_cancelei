@@ -4,6 +4,9 @@ import com.example.crud.domain.assinatura.Assinatura;
 import com.example.crud.domain.usuario.Usuario;
 import com.example.crud.domain.usuario.UsuarioRepository;
 import com.example.crud.service.AssinaturaService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,11 +25,16 @@ public class AssinaturaController {
     }
 
     @GetMapping
-    public String listar(Model model) {
+    public String listar(@RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "9") int size,
+                         Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
-        model.addAttribute("assinaturas", service.listarPorUsuario(usuario));
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Assinatura> assinaturasPage = service.listarPorUsuarioPaginado(usuario, pageable);
+
+        model.addAttribute("page", assinaturasPage);
         return "assinaturas";
     }
 
