@@ -1,0 +1,6 @@
+
+ALTER TABLE usuario ADD COLUMN cep TEXT;
+ALTER TABLE usuario ADD COLUMN logradouro TEXT;
+ALTER TABLE usuario ADD COLUMN bairro TEXT;
+ALTER TABLE usuario ADD COLUMN cidade TEXT;
+ALTER TABLE usuario ADD COLUMN uf TEXT;

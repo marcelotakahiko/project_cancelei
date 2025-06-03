@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Lista de Notificações</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/style.css}">
+  <script th:src="@{/js/script.js}"></script>
+</head>
+<body class="bg-light">
+
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container py-5">
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <h2 class="fw-bold">Notificações</h2>
+    <a href="/notificacoes/nova" class="btn btn-success rounded-3 fw-semibold">+ Nova Notificação</a>
+  </div>
+
+  <div class="row g-4">
+    <div class="col-md-4" th:each="notificacao : ${page.content}">
+      <div class="card border-0 shadow-sm rounded-4 h-100">
+        <div class="card-body">
+          <h5 class="card-title fw-semibold mb-2" th:text="${notificacao.titulo}">Título da Notificação</h5>
+
+          <div th:switch="${#strings.toUpperCase(notificacao.status)}">
+            <span class="badge rounded-pill text-bg-success" th:case="'ENVIADA'">Enviada</span>
+            <span class="badge rounded-pill text-bg-warning" th:case="'PENDENTE'">Pendente</span>
+            <span class="badge rounded-pill text-bg-secondary" th:case="*">Desconhecido</span>
+          </div>
+
+          <p class="mt-3 mb-1"><strong>Data:</strong> <span th:text="${#temporals.format(notificacao.data, 'dd/MM/yyyy')}">17/05/2025</span></p>
+          <p class="mb-1"><strong>Mensagem:</strong> <span th:text="${notificacao.mensagem}">Texto da mensagem</span></p>
+          <p class="mb-3"><strong>Assinatura:</strong> <span th:text="${notificacao.assinatura.nomeServico}">Netflix</span></p>
+
+          <div class="d-flex justify-content-between">
+            <a th:href="@{'/notificacoes/editar/' + ${notificacao.id}}" class="btn btn-outline-success btn-sm w-50 me-2">Editar</a>
+            <a th:href="@{'/notificacoes/excluir/' + ${notificacao.id}}" class="btn btn-danger btn-sm w-50">Excluir</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <nav th:if="${page.totalPages > 1}" aria-label="Page navigation">
+    <ul class="pagination justify-content-center mt-4">
+      <li class="page-item" th:classappend="${page.first} ? 'disabled'">
+        <a class="page-link" th:href="@{/notificacoes(page=${page.number - 1})}">Anterior</a>
+      </li>
+      <li class="page-item" th:each="i : ${#numbers.sequence(0, page.totalPages - 1)}"
+          th:classappend="${i == page.number} ? 'active'">
+        <a class="page-link" th:href="@{/notificacoes(page=${i})}" th:text="${i + 1}"></a>
+      </li>
+      <li class="page-item" th:classappend="${page.last} ? 'disabled'">
+        <a class="page-link" th:href="@{/notificacoes(page=${page.number + 1})}">Próxima</a>
+      </li>
+    </ul>
+  </nav>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
