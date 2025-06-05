@@ -1,6 +1,5 @@
-package com.example.crud.domain.pagamentos;
+package com.example.crud.domain;
 
-import com.example.crud.domain.assinatura.Assinatura;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;

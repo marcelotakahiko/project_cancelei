@@ -1,6 +1,5 @@
-package com.example.crud.domain.assinatura;
+package com.example.crud.domain;
 
-import com.example.crud.domain.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;

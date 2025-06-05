@@ -1,9 +1,9 @@
 package com.example.crud.service;
 
-import com.example.crud.domain.assinatura.Assinatura;
-import com.example.crud.domain.pagamentos.Pagamento;
-import com.example.crud.domain.pagamentos.PagamentoRepository;
-import com.example.crud.domain.assinatura.AssinaturaRepository;
+import com.example.crud.domain.Assinatura;
+import com.example.crud.domain.Pagamento;
+import com.example.crud.repository.PagamentoRepository;
+import com.example.crud.repository.AssinaturaRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

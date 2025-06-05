@@ -1,9 +1,9 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.token.TokenRecuperacao;
-import com.example.crud.domain.token.TokenRecuperacaoRepository;
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
+import com.example.crud.domain.TokenRecuperacao;
+import com.example.crud.repository.TokenRecuperacaoRepository;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;

@@ -1,5 +1,6 @@
-package com.example.crud.domain.token;
+package com.example.crud.repository;
 
+import com.example.crud.domain.TokenRecuperacao;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

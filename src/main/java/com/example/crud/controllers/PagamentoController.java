@@ -1,8 +1,8 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.pagamentos.Pagamento;
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
+import com.example.crud.domain.Pagamento;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
 import com.example.crud.service.AssinaturaService;
 import com.example.crud.service.PagamentoService;
 import org.springframework.data.domain.Page;

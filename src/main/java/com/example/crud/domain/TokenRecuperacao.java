@@ -1,6 +1,5 @@
-package com.example.crud.domain.token;
+package com.example.crud.domain;
 
-import com.example.crud.domain.usuario.Usuario;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;

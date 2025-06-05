@@ -1,4 +1,4 @@
-package com.example.crud.domain.usuario;
+package com.example.crud.security;
 
 public enum Role {
     USER,

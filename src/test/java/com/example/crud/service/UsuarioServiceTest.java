@@ -1,7 +1,7 @@
 package com.example.crud.service;
 
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.security.crypto.password.PasswordEncoder;

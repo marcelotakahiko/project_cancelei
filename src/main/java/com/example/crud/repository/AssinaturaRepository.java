@@ -1,10 +1,12 @@
-package com.example.crud.domain.assinatura;
+package com.example.crud.repository;
 
-import com.example.crud.domain.usuario.Usuario;
+import com.example.crud.domain.Assinatura;
+import com.example.crud.domain.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {
@@ -15,6 +17,8 @@ public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {
 
     Page<Assinatura> findByUsuario(Usuario usuario, Pageable pageable);
 
-    List<Assinatura> findByDataVencimento(java.time.LocalDate data);
+    List<Assinatura> findByDataVencimento(LocalDate data);
+
+    List<Assinatura> findByUsuarioAndStatusIgnoreCase(Usuario usuario, String status);
 
 }

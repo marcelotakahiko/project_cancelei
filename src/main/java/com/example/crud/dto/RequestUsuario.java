@@ -1,4 +1,4 @@
-package com.example.crud.domain.usuario;
+package com.example.crud.dto;
 
 public record RequestUsuario(String nome, String email, String senha) {
 }

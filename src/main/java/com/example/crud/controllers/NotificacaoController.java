@@ -1,9 +1,9 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.notificacao.Notificacao;
-import com.example.crud.domain.notificacao.StatusNotificacao;
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
+import com.example.crud.domain.Notificacao;
+import com.example.crud.domain.StatusNotificacao;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
 import com.example.crud.service.AssinaturaService;
 import com.example.crud.service.NotificacaoService;
 

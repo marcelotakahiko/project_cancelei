@@ -1,5 +1,6 @@
-package com.example.crud.domain.usuario;
+package com.example.crud.domain;
 
+import com.example.crud.security.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

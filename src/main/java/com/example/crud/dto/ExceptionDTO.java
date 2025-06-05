@@ -1,4 +1,4 @@
-package com.example.crud.infra;
+package com.example.crud.dto;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 

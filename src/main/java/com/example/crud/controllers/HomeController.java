@@ -1,13 +1,13 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.assinatura.Assinatura;
-import com.example.crud.domain.assinatura.AssinaturaRepository;
-import com.example.crud.domain.pagamentos.Pagamento;
-import com.example.crud.domain.pagamentos.PagamentoRepository;
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
-import com.example.crud.domain.notificacao.Notificacao;
-import com.example.crud.domain.notificacao.StatusNotificacao;
+import com.example.crud.domain.Assinatura;
+import com.example.crud.repository.AssinaturaRepository;
+import com.example.crud.domain.Pagamento;
+import com.example.crud.repository.PagamentoRepository;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
+import com.example.crud.domain.Notificacao;
+import com.example.crud.domain.StatusNotificacao;
 import com.example.crud.service.NotificacaoService;
 import com.example.crud.dto.AssinaturaTotalDTO;
 

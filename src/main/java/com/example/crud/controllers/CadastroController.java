@@ -1,8 +1,8 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
-import com.example.crud.domain.usuario.Role;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
+import com.example.crud.security.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;

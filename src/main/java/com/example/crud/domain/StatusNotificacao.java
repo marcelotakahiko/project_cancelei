@@ -1,4 +1,4 @@
-package com.example.crud.domain.notificacao;
+package com.example.crud.domain;
 
 public enum StatusNotificacao {
     ENVIADA,

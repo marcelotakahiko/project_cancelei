@@ -1,16 +1,22 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.pagamentos.Pagamento;
-import com.example.crud.domain.pagamentos.PagamentoRepository;
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
+import com.example.crud.domain.Pagamento;
+import com.example.crud.repository.PagamentoRepository;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
+import com.example.crud.service.ResumoFinanceiroService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
@@ -24,6 +30,9 @@ public class GraficosController {
 
     @Autowired
     private PagamentoRepository pagamentoRepository;
+
+    @Autowired
+    private ResumoFinanceiroService resumoFinanceiroService;
 
     @GetMapping("/graficos")
     public String exibirGraficos(@RequestParam(name = "mes", defaultValue = "0") int mes,
@@ -70,5 +79,15 @@ public class GraficosController {
         model.addAttribute("valoresMensais", totalPorMes.values());
 
         return "graficos";
+    }
+
+    @GetMapping("/resumo-financeiro/download")
+    public ResponseEntity<InputStreamResource> downloadResumoFinanceiroCSV() {
+        ByteArrayInputStream csvStream = resumoFinanceiroService.gerarResumoCSV();
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=resumo-financeiro.csv")
+                .contentType(MediaType.parseMediaType("text/csv"))
+                .body(new InputStreamResource(csvStream));
     }
 }

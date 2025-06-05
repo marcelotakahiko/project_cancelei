@@ -1,7 +1,7 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.usuario.Usuario;
-import com.example.crud.domain.usuario.UsuarioRepository;
+import com.example.crud.domain.Usuario;
+import com.example.crud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,6 +36,17 @@ public class AdminController {
 
     @PostMapping("/usuarios/editar")
     public String salvarEdicao(@ModelAttribute Usuario usuario) {
+        Usuario existente = usuarioRepository.findById(usuario.getId()).orElseThrow();
+
+        usuario.setSenha(existente.getSenha());
+        usuario.setActive(existente.getActive());
+        usuario.setAceitouTermos(existente.getAceitouTermos());
+        usuario.setCep(existente.getCep());
+        usuario.setLogradouro(existente.getLogradouro());
+        usuario.setBairro(existente.getBairro());
+        usuario.setCidade(existente.getCidade());
+        usuario.setUf(existente.getUf());
+
         usuarioRepository.save(usuario);
         return "redirect:/admin/usuarios";
     }

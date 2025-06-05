@@ -1,6 +1,8 @@
-package com.example.crud.domain.notificacao;
+package com.example.crud.repository;
 
-import com.example.crud.domain.usuario.Usuario;
+import com.example.crud.domain.Notificacao;
+import com.example.crud.domain.StatusNotificacao;
+import com.example.crud.domain.Usuario;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

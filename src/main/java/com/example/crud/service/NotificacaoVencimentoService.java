@@ -1,7 +1,7 @@
 package com.example.crud.service;
 
-import com.example.crud.domain.assinatura.Assinatura;
-import com.example.crud.domain.assinatura.AssinaturaRepository;
+import com.example.crud.domain.Assinatura;
+import com.example.crud.repository.AssinaturaRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -10,13 +10,13 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-@Service // Define esta classe como um serviço gerenciado pelo Spring
+@Service // Define esta classe como um serviço gerenciado pelo spring
 public class NotificacaoVencimentoService {
 
     private final AssinaturaRepository assinaturaRepository;
     private final JavaMailSender mailSender;
 
-    // Injeta o repositório de assinaturas e o componente para envio de e-mails
+    // Injeta o repositorio de assinaturas e o componente para envio de e-mails
     public NotificacaoVencimentoService(AssinaturaRepository assinaturaRepository, JavaMailSender mailSender) {
         this.assinaturaRepository = assinaturaRepository;
         this.mailSender = mailSender;

@@ -1,9 +1,9 @@
 package com.example.crud.service;
 
-import com.example.crud.domain.notificacao.Notificacao;
-import com.example.crud.domain.notificacao.NotificacaoRepository;
-import com.example.crud.domain.notificacao.StatusNotificacao;
-import com.example.crud.domain.usuario.Usuario;
+import com.example.crud.domain.Notificacao;
+import com.example.crud.repository.NotificacaoRepository;
+import com.example.crud.domain.StatusNotificacao;
+import com.example.crud.domain.Usuario;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 

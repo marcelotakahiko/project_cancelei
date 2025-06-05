@@ -1,6 +1,5 @@
-package com.example.crud.domain.notificacao;
+package com.example.crud.domain;
 
-import com.example.crud.domain.assinatura.Assinatura;
 import lombok.Getter;
 import lombok.Setter;
 import jakarta.persistence.*;

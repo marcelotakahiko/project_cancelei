@@ -1,6 +1,6 @@
 package com.example.crud.controllers;
 
-import com.example.crud.domain.usuario.Usuario;
+import com.example.crud.domain.Usuario;
 import com.example.crud.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
