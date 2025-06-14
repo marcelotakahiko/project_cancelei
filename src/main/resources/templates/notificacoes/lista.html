@@ -13,27 +13,40 @@
 
 <div class="container py-5">
   <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold">Notificações</h2>
+    <h2 class="fw-bold">NOTIFICAÇÕES</h2>
     <a href="/notificacoes/nova" class="btn btn-success rounded-3 fw-semibold">+ Nova Notificação</a>
   </div>
 
   <div class="row g-4">
     <div class="col-md-4" th:each="notificacao : ${page.content}">
       <div class="card border-0 shadow-sm rounded-4 h-100">
-        <div class="card-body">
-          <h5 class="card-title fw-semibold mb-2" th:text="${notificacao.titulo}">Título da Notificação</h5>
+        <div class="card-body d-flex flex-column justify-content-between h-100">
+          <div>
+            <h5 class="card-title fw-semibold mb-2" th:text="${notificacao.titulo}">Título da Notificação</h5>
 
-          <div th:switch="${#strings.toUpperCase(notificacao.status)}">
-            <span class="badge rounded-pill text-bg-success" th:case="'ENVIADA'">Enviada</span>
-            <span class="badge rounded-pill text-bg-warning" th:case="'PENDENTE'">Pendente</span>
-            <span class="badge rounded-pill text-bg-secondary" th:case="*">Desconhecido</span>
+            <div th:switch="${#strings.toUpperCase(notificacao.status)}" class="mb-2">
+              <span class="badge rounded-pill text-bg-success" th:case="'ENVIADA'">Enviada</span>
+              <span class="badge rounded-pill text-bg-warning" th:case="'PENDENTE'">Pendente</span>
+              <span class="badge rounded-pill text-bg-secondary" th:case="*">Desconhecido</span>
+            </div>
+
+            <div class="d-grid gap-1 small">
+              <div class="d-flex justify-content-between">
+                <span class="fw-semibold">Data:</span>
+                <span th:text="${#temporals.format(notificacao.data, 'dd/MM/yyyy')}">17/05/2025</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="fw-semibold">Mensagem:</span>
+                <span th:text="${notificacao.mensagem}">Ex: Evite juros</span>
+              </div>
+              <div class="d-flex justify-content-between">
+                <span class="fw-semibold">Assinatura:</span>
+                <span th:text="${notificacao.assinatura.nomeServico}">Netflix</span>
+              </div>
+            </div>
           </div>
 
-          <p class="mt-3 mb-1"><strong>Data:</strong> <span th:text="${#temporals.format(notificacao.data, 'dd/MM/yyyy')}">17/05/2025</span></p>
-          <p class="mb-1"><strong>Mensagem:</strong> <span th:text="${notificacao.mensagem}">Texto da mensagem</span></p>
-          <p class="mb-3"><strong>Assinatura:</strong> <span th:text="${notificacao.assinatura.nomeServico}">Netflix</span></p>
-
-          <div class="d-flex justify-content-between">
+          <div class="d-flex justify-content-between mt-3">
             <a th:href="@{'/notificacoes/editar/' + ${notificacao.id}}" class="btn btn-outline-success btn-sm w-50 me-2">Editar</a>
             <a th:href="@{'/notificacoes/excluir/' + ${notificacao.id}}" class="btn btn-danger btn-sm w-50">Excluir</a>
           </div>

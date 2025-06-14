@@ -16,6 +16,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.server.ResponseStatusException;
+import org.springframework.http.HttpStatus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -39,9 +41,10 @@ public class HomeController {
     @GetMapping("/home")
     public String home(Model model) {
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
-        Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
+        Usuario usuario = usuarioRepository.findByEmail(email)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não autenticado ou não encontrado"));
 
-        List<Assinatura> assinaturas = assinaturaRepository.findTop3ByUsuarioOrderByDataVencimentoAsc(usuario);
+        List<Assinatura> assinaturas = assinaturaRepository.findTop3ByUsuarioAndStatusIgnoreCaseOrderByValorDesc(usuario, "Ativa");
         List<Pagamento> pagamentos = pagamentoRepository.findTop3ByAssinaturaUsuarioOrderByDataPagamentoDesc(usuario);
         List<Notificacao> todasNotificacoes = notificacaoService.listarPorStatusEUsuario(StatusNotificacao.PENDENTE, usuario);
         List<Notificacao> notificacoes = todasNotificacoes.stream().limit(5).collect(Collectors.toList());

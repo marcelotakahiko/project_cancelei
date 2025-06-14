@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface AssinaturaRepository extends JpaRepository<Assinatura, Long> {
 
-    List<Assinatura> findTop3ByUsuarioOrderByDataVencimentoAsc(Usuario usuario);
+    List<Assinatura> findTop3ByUsuarioAndStatusIgnoreCaseOrderByValorDesc(Usuario usuario, String status);
 
     List<Assinatura> findByUsuario(Usuario usuario);
 

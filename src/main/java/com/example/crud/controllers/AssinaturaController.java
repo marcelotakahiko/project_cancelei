@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/assinaturas")
@@ -71,14 +72,22 @@ public class AssinaturaController {
     }
 
     @GetMapping("/excluir/{id}")
-    public String excluir(@PathVariable Long id) {
+    public String excluir(@PathVariable Long id, RedirectAttributes redirectAttributes) {
         Assinatura assinatura = service.buscarPorId(id).orElseThrow();
 
         String email = SecurityContextHolder.getContext().getAuthentication().getName();
         Usuario usuario = usuarioRepository.findByEmail(email).orElseThrow();
 
-        if (assinatura.getUsuario().getId().equals(usuario.getId())) {
+        if (!assinatura.getUsuario().getId().equals(usuario.getId())) {
+            redirectAttributes.addFlashAttribute("erro", "Você não tem permissão para excluir esta assinatura.");
+            return "redirect:/assinaturas";
+        }
+
+        try {
             service.excluir(id);
+            redirectAttributes.addFlashAttribute("mensagem", "Assinatura excluída com sucesso.");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("erro", "Não foi possível excluir: existem pagamentos vinculados.");
         }
 
         return "redirect:/assinaturas";

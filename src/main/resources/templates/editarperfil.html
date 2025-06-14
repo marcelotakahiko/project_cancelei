@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Perfil</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/navbar :: navbar"></div>
+
+<div class="container py-5">
+    <h2 class="text-center fw-bold mb-4">Editar Perfil</h2>
+
+    <form th:action="@{/usuario/editarperfil}" th:object="${usuario}" method="post">
+    <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Nome</label>
+                <input type="text" th:field="*{nome}" class="form-control" required>
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Email</label>
+                <input type="email" th:field="*{email}" class="form-control" required>
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <label class="form-label">CEP</label>
+                <input type="text" th:field="*{cep}" class="form-control" maxlength="9" onblur="buscarEndereco(this.value)">
+            </div>
+            <div class="col-md-8">
+                <label class="form-label">Rua</label>
+                <input type="text" th:field="*{logradouro}" class="form-control">
+            </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <div class="col-md-6">
+                <label class="form-label">Cidade</label>
+                <input type="text" th:field="*{cidade}" class="form-control">
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">Estado</label>
+                <input type="text" th:field="*{uf}" class="form-control">
+            </div>
+        </div>
+
+        <hr>
+
+        <h5 class="fw-semibold">Alterar Senha</h5>
+        <div class="row g-3 mb-3">
+            <div class="col-md-4">
+                <label class="form-label">Senha Atual</label>
+                <input type="password" name="senhaAtual" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Nova Senha</label>
+                <input type="password" name="novaSenha" class="form-control">
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">Confirmar Nova Senha</label>
+                <input type="password" name="confirmarSenha" class="form-control">
+            </div>
+        </div>
+
+        <div class="d-grid mt-4">
+            <button type="submit" class="btn btn-primary rounded-3 fw-semibold">Salvar Alterações</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    function buscarEndereco(cep) {
+        if (!cep) return;
+        cep = cep.replace(/\D/g, '');
+        axios.get(`https://viacep.com.br/ws/${cep}/json/`)
+            .then(response => {
+                const data = response.data;
+                if (!data.erro) {
+                    document.querySelector('[name="logradouro"]').value = data.logradouro || '';
+                    document.querySelector('[name="cidade"]').value = data.localidade || '';
+                    document.querySelector('[name="uf"]').value = data.uf || '';
+                }
+            })
+            .catch(error => console.log(error));
+    }
+</script>
+<div th:replace="fragments/footer :: footer"></div>
+<div th:replace="fragments/termos-modal :: termosModal"></div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

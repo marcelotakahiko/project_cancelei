@@ -3,9 +3,12 @@ package com.example.crud.controllers;
 import com.example.crud.domain.Usuario;
 import com.example.crud.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
@@ -17,8 +20,16 @@ public class UsuarioController {
     private UsuarioService usuarioService;
 
     @GetMapping
-    public String listar(Model model) {
-        model.addAttribute("usuarios", usuarioService.listarUsuarios());
+    public String listar(Model model,
+                         @RequestParam(defaultValue = "0") int page,
+                         @RequestParam(defaultValue = "50") int size) {
+
+        Pageable pageable = PageRequest.of(page, size);
+        Page<Usuario> usuariosPage = usuarioService.listarUsuarios(pageable);
+
+        model.addAttribute("usuarios", usuariosPage.getContent());
+        model.addAttribute("currentPage", page);
+        model.addAttribute("totalPages", usuariosPage.getTotalPages());
         return "usuarios/lista";
     }
 

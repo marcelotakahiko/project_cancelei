@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<div class="modal fade" id="termosModal" tabindex="-1" aria-labelledby="termosModalLabel" aria-hidden="true" th:fragment="termosModal">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title fw-bold" id="termosModalLabel">Termos de Uso e Política de Privacidade</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+      </div>
+      <div class="modal-body">
+        <h5>1. Definições</h5>
+        <ul>
+          <li><strong>Cancelei!:</strong> plataforma web para gestão de assinaturas e despesas recorrentes.</li>
+          <li><strong>Usuário:</strong> pessoa física que se cadastra e utiliza o sistema.</li>
+          <li><strong>Dados Pessoais:</strong> informações que identificam o Usuário (nome, email, CEP, endereço).</li>
+        </ul>
+
+        <h5>2. Escopo de Aplicação</h5>
+        <p>Estes Termos regem o uso do Cancelei! e disciplinam o tratamento dos Dados Pessoais dos Usuários, conforme a Lei nº 13.709/2018 (LGPD).</p>
+
+        <h5>3. Coleta de Dados</h5>
+        <h6>3.1 Cadastro</h6>
+        <p>nome, email e senha (criptografada) e endereço via CEP.</p>
+        <h6>3.2 Uso da Plataforma</h6>
+        <p>dados de assinaturas (serviço, valor, vencimento, forma de pagamento, status) e histórico de pagamentos (valor, data, método, status).</p>
+
+        <h5>4. Finalidades do Tratamento</h5>
+        <ul>
+          <li>Autenticação e segurança de acesso.</li>
+          <li>Gestão de assinaturas e notificações de vencimento.</li>
+          <li>Envio de alertas e lembretes por email.</li>
+          <li>Geração de relatórios e gráficos financeiros.</li>
+        </ul>
+
+        <h5>5. Compartilhamento de Dados</h5>
+        <p>Não compartilhamos dados para marketing ou vendas. Usamos serviços de email apenas para notificações e cumprimos obrigações legais.</p>
+
+        <h5>6. Armazenamento e Segurança</h5>
+        <p>Dados armazenados em PostgreSQL com acesso restrito; senhas protegidas por hash BCrypt; medidas técnicas e administrativas para segurança.</p>
+
+        <h5>7. Direitos dos Usuários</h5>
+        <ul>
+          <li>Acessar seus dados pessoais.</li>
+          <li>Corrigir informações incorretas.</li>
+          <li>Excluir sua conta e dados pelo sistema ou solicitando ao suporte.</li>
+          <li>Saber com quem seus dados são compartilhados.</li>
+          <li>Revogar consentimento (funcionalidades poderão ficar indisponíveis).</li>
+        </ul>
+
+        <h5>8. Retenção e Eliminação</h5>
+        <p>Dados mantidos enquanto a conta estiver ativa. Após exclusão, perfil fica inativo e, após prazo legal, registros são eliminados.</p>
+
+        <h5>9. Atualizações</h5>
+        <p>Estes Termos podem ser alterados a qualquer momento. Notificaremos você no próximo login.</p>
+
+        <h5>Contato</h5>
+        <p>Para dúvidas ou solicitações, escreva para <a href="mailto:suporte@cancelei.com">suporte@cancelei.com</a>.</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

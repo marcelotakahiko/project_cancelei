@@ -1,14 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@700;900&family=Nunito+Sans:wght@600;700&family=Inter:wght@400;600&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Inter', sans-serif;
     background-color: #f4f4f4;
     padding: 0;
     margin: 0;
-    padding-top: 0;
 }
 
 h1, h2 {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 700;
     color: #333;
     text-align: center;
+}
+
+a {
+    text-decoration: none;
 }
 
 table {
@@ -18,31 +25,23 @@ table {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
     margin-top: 20px;
 }
-
 th, td {
     border: 1px solid #ddd;
     padding: 12px;
     text-align: left;
 }
-
 th {
     background-color: #f0f0f0;
     color: #333;
 }
-
 tr:hover {
     background-color: #f9f9f9;
-}
-
-a {
-    text-decoration: none;
 }
 
 .logo-container {
     text-align: center;
     margin-top: 20px;
 }
-
 .logo-container img {
     height: 80px;
 }
@@ -50,19 +49,28 @@ a {
 .navbar {
     background-color: #333;
     overflow: hidden;
-    text-align: center;
     padding: 10px 0;
 }
-
 .navbar a {
     color: white;
     padding: 14px 20px;
-    text-decoration: none;
     display: inline-block;
 }
-
 .navbar a:hover {
     background-color: #575757;
+}
+.navbar-brand span {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+}
+.navbar .nav-link {
+    font-family: 'Nunito Sans', sans-serif;
+    font-weight: 600;
+    border-radius: .25rem;
+    transition: background-color .2s;
+}
+.navbar .nav-link:hover {
+    background-color: rgba(255,255,255,0.2);
 }
 
 .card-grid {
@@ -71,11 +79,10 @@ a {
     gap: 20px;
     padding: 20px;
 }
-
 .card {
     background-color: white;
     border-radius: 16px;
-    padding: 20px;
+    padding: 0;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.07);
     display: flex;
     flex-direction: column;
@@ -83,23 +90,36 @@ a {
     transition: transform 0.2s;
 }
 
+
+.card .card-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.card .card-body > a.btn {
+    margin-top: auto;
+}
+
 .card:hover {
     transform: scale(1.02);
 }
 
 .card-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
     font-size: 1.2rem;
-    font-weight: bold;
     margin-bottom: 10px;
     color: #333;
 }
-
 .card-info {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
     color: #555;
     font-size: 0.95rem;
     margin-bottom: 6px;
 }
-
 .card-actions {
     display: flex;
     justify-content: flex-end;
@@ -115,18 +135,68 @@ a {
     display: inline-block;
     margin-bottom: 10px;
 }
-
 .badge.success {
     background-color: #d4edda;
     color: #155724;
 }
-
 .badge.warning {
     background-color: #fff3cd;
     color: #856404;
 }
-
 .badge.danger {
     background-color: #f8d7da;
     color: #721c24;
+}
+
+.navbar .navbar-brand {
+    border-radius: .25rem;
+    transition: background-color .2s;
+}
+.navbar .navbar-brand:hover {
+    background-color: rgba(255,255,255,0.2);
+}
+
+.navbar,
+.navbar .container-fluid {
+    overflow: visible !important;
+    z-index: 1000 !important;
+}
+.navbar .dropdown-menu {
+    z-index: 1100 !important;
+}
+
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+}
+.login-card {
+    max-width: 400px;
+    width: 100%;
+    padding: 2rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border-radius: 8px;
+    background-color: #ffffff;
+}
+.login-card .logo {
+    width: 100px;
+    height: auto;
+    margin-bottom: 1rem;
+}
+.login-card .subtitle {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: #6c757d;
+    margin-bottom: 1.5rem;
+    font-size: 0.95rem;
+}
+
+
+html, body {
+    user-select: none;
+}
+input, textarea {
+    user-select: text;
 }

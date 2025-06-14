@@ -7,7 +7,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import java.util.UUID;
 
-
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,13 +16,18 @@ public class Usuario {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
+
     private String nome;
     private String email;
     private String senha;
+
+    @Transient
+    private String confirmarSenha;                                                              //não persiste no banco
+
     private Boolean active = true;
 
     @Enumerated(EnumType.STRING)
-    private Role role = Role.USER;    //Role usuário
+    private Role role = Role.USER;
 
     @Column(name = "aceitou_termos")
     private Boolean aceitouTermos;
@@ -34,4 +38,3 @@ public class Usuario {
     private String cidade;
     private String uf;
 }
-

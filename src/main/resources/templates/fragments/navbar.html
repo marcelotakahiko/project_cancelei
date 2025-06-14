@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head></head>
 <body>
-
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand-lg" style="background-color: #198754; width: 100%;">
         <div class="container-fluid justify-content-between">
@@ -10,19 +8,35 @@
                 <img th:src="@{/images/logocancelei.png}" alt="Logo" width="48" height="48" class="me-2">
                 <span class="text-white fw-bold fs-5">Cancelei</span>
             </a>
-
-            <div class="d-flex align-items-center">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 flex-row">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto flex-row align-items-center">
                     <li class="nav-item px-2"><a class="nav-link text-white" th:href="@{/assinaturas}">Assinaturas</a></li>
                     <li class="nav-item px-2"><a class="nav-link text-white" th:href="@{/pagamentos}">Pagamentos</a></li>
                     <li class="nav-item px-2"><a class="nav-link text-white" th:href="@{/notificacoes}">Notificações</a></li>
+                    <li class="nav-item dropdown px-2">
+                        <a class="nav-link dropdown-toggle text-white p-2 rounded" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" data-bs-boundary="viewport" aria-expanded="false">
+                            <img th:src="@{/images/usericon.png}" alt="Perfil" width="32" height="32">
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="profileDropdown">
+                            <li>
+                                <a class="dropdown-item text-center" th:href="@{/usuario/editarperfil}">
+                                <img th:src="@{/images/edit.png}" alt="Editar Perfil" width="24" height="24">
+                                </a>
+                            </li>
+                            <li><hr class="dropdown-divider"></li>
+                            <li>
+                                <form th:action="@{/logout}" method="post" style="margin:0; text-align:center;">
+                                    <button type="submit" class="dropdown-item p-1">
+                                        <img th:src="@{/images/sair.png}" alt="Sair" width="24" height="24">
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
-
-                <form th:action="@{/logout}" method="post" style="margin: 0;">
-                    <button type="submit" class="nav-link text-danger bg-transparent border-0 px-3" style="font-weight: bold;">
-                        Sair
-                    </button>
-                </form>
             </div>
         </div>
     </nav>

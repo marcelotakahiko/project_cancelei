@@ -28,15 +28,31 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/cadastro", "/esqueci-senha", "/redefinir-senha", "/redefinir-senha/**", "/css/**", "/js/**", "/images/**").permitAll()
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/user/**", "/home").hasAnyRole("USER", "ADMIN")
+                        .requestMatchers(
+                                "/login", "/cadastro", "/esqueci-senha",
+                                "/redefinir-senha", "/redefinir-senha/**",
+                                "/css/**", "/js/**", "/images/**"
+                        ).permitAll()
+
+                        // ADMIN pode acessar apenas rotas de admin
+                        .requestMatchers("/admin/**", "/usuarios/**").hasRole("ADMIN")
+
+                        // USER pode acessar apenas seu painel
+                        .requestMatchers(
+                                "/home",
+                                "/usuario/**",
+                                "/assinaturas/**",
+                                "/pagamentos/**",
+                                "/notificacoes/**",
+                                "/graficos/**"
+                        ).hasRole("USER")
+
                         .anyRequest().authenticated()
                 )
                 .formLogin(form -> form
                         .loginPage("/login")
                         .loginProcessingUrl("/login")
-                        .successHandler(successHandler) // redireciona conforme role
+                        .successHandler(successHandler)
                         .permitAll()
                 )
                 .logout(logout -> logout

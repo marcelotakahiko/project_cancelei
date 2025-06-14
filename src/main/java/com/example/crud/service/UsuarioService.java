@@ -5,54 +5,58 @@ import com.example.crud.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-@Service // Indica que esta classe é um componente de serviço do Spring
+@Service
 public class UsuarioService {
 
-    @Autowired // Injeta automaticamente a dependência do repositório de usuários
+    @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Autowired // Injeta automaticamente o codificador de senhas (BCrypt, por exemplo)
+    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    // Cria um novo usuário com a senha criptografada
     public Usuario criarUsuario(Usuario usuario) {
-        usuario.setSenha(passwordEncoder.encode(usuario.getSenha())); // Criptografa a senha
-        return usuarioRepository.save(usuario); // Salva o usuário no banco de dados
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        return usuarioRepository.save(usuario);
     }
 
-    // Lista todos os usuários cadastrados
-    public List<Usuario> listarUsuarios() {
-        return usuarioRepository.findAll();
+    public Page<Usuario> listarUsuarios(Pageable pageable) {
+        return usuarioRepository.findAll(pageable);
     }
 
-    // Busca um usuário pelo ID (UUID)
     public Usuario buscarUsuario(UUID id) {
-        Optional<Usuario> usuario = usuarioRepository.findById(id); // Busca o usuário
-        return usuario.orElse(null); // Retorna o usuário ou null se não encontrado
+        return usuarioRepository.findById(id).orElse(null);
     }
 
-    // Atualiza os dados de um usuário existente
-    public Usuario atualizarUsuario(UUID id, Usuario usuarioAtualizado) {
-        Usuario usuario = buscarUsuario(id); // Busca o usuário atual pelo ID
-        if (usuario != null) {
-            usuario.setNome(usuarioAtualizado.getNome()); // Atualiza nome
-            usuario.setEmail(usuarioAtualizado.getEmail()); // Atualiza email
-
-            // Criptografa a nova senha antes de salvar
-            usuario.setSenha(passwordEncoder.encode(usuarioAtualizado.getSenha()));
-
-            return usuarioRepository.save(usuario); // Salva as alterações
-        }
-        return null; // Retorna null se o usuário não for encontrado
-    }
-
-    // Deleta um usuário pelo ID
     public void deletarUsuario(UUID id) {
-        usuarioRepository.deleteById(id); // Remove o usuário do banco de dados
+        usuarioRepository.deleteById(id);
     }
+
+    public Optional<Usuario> findByEmail(String email) {
+        return usuarioRepository.findByEmail(email);
+    }
+
+    public boolean existsByEmail(String email) {
+        return usuarioRepository.findByEmail(email).isPresent();
+    }
+
+    public Usuario salvarComSenhaCriptografada(Usuario usuario) {
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario salvarSemAlterarSenha(Usuario usuario) {
+        return usuarioRepository.save(usuario);
+    }
+
+    public Usuario atualizarSenha(Usuario usuario) {
+        usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        return usuarioRepository.save(usuario);
+    }
+
 }
